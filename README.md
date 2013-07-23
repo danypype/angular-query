@@ -71,15 +71,15 @@ You can use the following operators on your queryOptions object:
 
     Examples: 
     
-        `price: {$gt: 20}` returns the items which price is greather than 20. 
+    `price: {$gt: 20}` returns the items which price is greather than 20. 
         
-        `price: {$lte: 21}` returns the items which price is less than 21 or equal.
+    `price: {$lte: 21}` returns the items which price is less than 21 or equal.
 
     Also can be used with `$and` or `$or`:
     
-        `$and: [{price: {$gte: 20}}, {price: {$lte: 100}}]` returns the items which price is greater than 20 or equal and less than 100 or equal.
+    `$and: [{price: {$gte: 20}}, {price: {$lte: 100}}]` returns the items which price is greater than 20 or equal and less than 100 or equal.
     
-        `$or: [{price: {$lt: 100}}, {inStock: false}]` returns the items which price is less than 100 or aren't in stock.
+    `$or: [{price: {$lt: 100}}, {inStock: false}]` returns the items which price is less than 100 or aren't in stock.
 
 - `$order` -> Order results. Must have the following properties:
     
@@ -103,6 +103,6 @@ You can use the following operators on your queryOptions object:
 
     Examples:
     
-        `"category.id": 1` returns the items which belong to the category with id 1. 
+    `"category.id": 1` returns the items which belong to the category with id 1. 
     
-        `ref: 123` returns the items with reference 123.
+    `ref: 123` returns the items with reference 123.
