@@ -37,7 +37,7 @@ You must pass an object structured as follows:
 
 ```
 $scope.queryOptions = {
-    anyProperty: number|string,
+    anyProperty: number|string|boolean,
     $and: array,
     $or: array,
     $sort: {
