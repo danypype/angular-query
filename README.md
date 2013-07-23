@@ -29,6 +29,7 @@ AngularJS directive to make custom queries on an array of objects.
         </li>
     </ul>
     ```
+    
 #Query options
 
 You must pass your query options to the directive through the `options` attribute as seen above.
@@ -71,11 +72,21 @@ You can use the following operators on your queryOptions object:
     `$and: [{price: {$gte: 20}}, {price: {$lte: 100}}]` returns the items which price is greater than 20 or equal and less than 100 or equal.
     `$or: [{price: {$lt: 100}}, {inStock: false}]` returns the items which price is less than 100 or aren't in stock.
 
-- $order: Must has the following properties:
+- `$order` -> Order results. Must has the following properties:
     `by` name of property to order by.
     `reverse` must be either true or false to order desc or asc.
 
     Example: `$order: {by: 'price', reverse: true}` orders the items by price descending.
+
+- `$limit` -> Limit results length.
+
+    Example: Show the first 100 items which price is greater than 20. 
+    ```
+    {
+        price: {$gt: 20},
+        $limit: 100
+    }
+    ```
 
 - You also can specify direct properties:
 
