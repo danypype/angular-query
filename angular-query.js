@@ -17,8 +17,6 @@ angular.module('query', [])
         return value;
       }
 
-      //Query limit
-      limit = $scope.queryOptions.limit;
       $scope.queryOptions.$stringify = function () {
         return JSON.stringify(this);
       }
@@ -57,7 +55,7 @@ angular.module('query', [])
             include = true; //Indicates if the item must be included on the items array at the end of the filters
 
             for (var key in $scope.queryOptions) {
-              if (key != '$order' && key != '$stringify') { //Ignore $order key
+              if (key != '$order' && key != '$limit' && key != '$stringify') { //Ignore $order, $limit, and $stringify keys
                 option = get($scope.queryOptions, key);
 
                 if (option.constructor == Array) {
@@ -78,7 +76,7 @@ angular.module('query', [])
               }
               if (!include) break;
             }
-            if (include && ($scope.results.length < limit || !limit))
+            if (include && ($scope.results.length < $scope.queryOptions.$limit || !$scope.queryOptions.$limit))
               $scope.results.push(item);
           }
 
