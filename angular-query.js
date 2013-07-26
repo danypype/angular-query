@@ -42,16 +42,38 @@ angular.module('query', [])
         }
       }
 
-      var filterAndOrder = function () {
+      var exec = function () {
         if (typeof($scope.source) != 'undefined' && $scope.source.constructor === Array &&
           $scope.source.length && typeof($scope.queryOptions == 'object')) {
+
+          var dataSet = [];
+          for (var i = 0; i < $scope.source.length; i++) {
+            dataSet.push($scope.source[i]);
+          }
+
+          if (typeof($scope.queryOptions.$order) != 'undefined' && $scope.queryOptions.$order.by) {
+            //Apply order to source
+            orderBy = $scope.queryOptions.$order.by;
+            reverse = $scope.queryOptions.$order.reverse;
+            dataSet.sort(function(a, b) {
+              if(get(a, orderBy) < get(b, orderBy)) {
+                if (reverse) return 1;
+                else return -1;
+              }
+              if(get(a, orderBy) > get(b, orderBy)) {
+                if (reverse) return -1;
+                else return 1
+              }
+              return 0;
+            });
+          }
 
           //Apply filters
           var item, option, value = null;
           $scope.results.length = 0;
 
-          for (var i = 0; i < $scope.source.length; i++) {
-            item = $scope.source[i];
+          for (var i = 0; i < dataSet.length; i++) {
+            item = dataSet[i];
             include = true; //Indicates if the item must be included on the items array at the end of the filters
 
             for (var key in $scope.queryOptions) {
@@ -79,30 +101,13 @@ angular.module('query', [])
             if (include && ($scope.results.length < $scope.queryOptions.$limit || !$scope.queryOptions.$limit))
               $scope.results.push(item);
           }
-
-          if (typeof($scope.queryOptions.$order) != 'undefined' && $scope.queryOptions.$order.by) {
-            //Apply order
-            orderBy = $scope.queryOptions.$order.by;
-            reverse = $scope.queryOptions.$order.reverse;
-            $scope.results.sort(function(a, b) {
-              if(get(a, orderBy) < get(b, orderBy)) {
-                if (reverse) return 1;
-                else return -1;
-              }
-              if(get(a, orderBy) > get(b, orderBy)) {
-                if (reverse) return -1;
-                else return 1
-              }
-              return 0;
-            });
-          }
         }
       }
 
       //Watch for $scope.source changes
-      $scope.$watch('source', filterAndOrder, true);
+      $scope.$watch('source', exec, true);
       //Watch for $scope.queryOptions changes
-      $scope.$watch('queryOptions.$stringify()', filterAndOrder);
+      $scope.$watch('queryOptions.$stringify()', exec);
     }]
   }
 });
