@@ -45,7 +45,7 @@ $scope.queryOptions = {
         by: string,
         reverse: boolean
     },
-    $imit: integer
+    $limit: integer
 }
 ```
 
